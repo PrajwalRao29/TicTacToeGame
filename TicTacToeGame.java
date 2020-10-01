@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class TicTacToeGame {
 	static Scanner scanner = new Scanner(System.in);
+
 	/**
 	 * initializing the board
 	 */
@@ -19,14 +20,26 @@ public class TicTacToeGame {
 	 * @taking the player's input to choose between X and O
 	 */
 	public static char playerInput() {
-		
+
 		System.out.println("Choose your character (X/0)");
 		char symbol = Character.toUpperCase(scanner.next().charAt(0));
-		if (symbol == 'X'|| symbol =='O')
+		if (symbol == 'X' || symbol == 'O')
 			return symbol;
 		else {
 			System.out.println("Invalid Character");
 			return playerInput();
+		}
+	}
+
+	/**
+	 * @Displaying the board
+	 */
+	public static void showBoard(char[] board) {
+		for (int position = 1; position < createBoard().length; position++) {
+			System.out.print(" | " + board[position]);
+			if (position % 3 == 0) {
+				System.out.println(" |");
+			}
 		}
 	}
 
@@ -35,5 +48,6 @@ public class TicTacToeGame {
 		char[] board = createBoard();
 		char player = playerInput();
 		char computer = (player == 'x') ? 'o' : 'x';
+		showBoard(board);
 	}
 }
