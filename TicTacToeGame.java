@@ -1,4 +1,7 @@
 package com.cg.tictactoegame;
+
+import java.util.Scanner;
+
 public class TicTacToeGame {
 
 	/**
@@ -12,8 +15,27 @@ public class TicTacToeGame {
 		return board;
 	}
 
+	/**
+	 * @taking the player's input to choose between X and O
+	 */
+	public static char playerInput() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Choose your character (X/0)");
+		char s = sc.next().charAt(0);
+		if (s == 'X' || s == 'x') {
+			return 'x';
+		} else if (s == 'O' || s == 'o') {
+			return 'o';
+		} else {
+			System.out.println("Invalid Character");
+			return playerInput();
+		}
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to TicTacToe program");
 		char[] board = createBoard();
+		char player = playerInput();
+		char computer=(player=='x')?'o':'x';
 	}
 }
