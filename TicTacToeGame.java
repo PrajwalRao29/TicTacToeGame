@@ -46,7 +46,7 @@ public class TicTacToeGame {
 	}
 
 	/**
-	 * UC4 Player move
+	 * UC4 Player move and UC10 Computer takes corner first
 	 */
 	public static void move(char[] board, char player, char user) {
 		if (player == user) {
@@ -65,7 +65,22 @@ public class TicTacToeGame {
 			} else if (denyWin(board, player, user)) {
 				return;
 			}
-
+			else if(board[1]==' ')
+			{
+			board[1]=player;
+			}
+			else if(board[3]==' ')
+			{
+			board[3]=player;
+			}
+			else if(board[7]==' ')
+			{
+			board[7]=player;
+			}
+			else if(board[9]==' ')
+			{
+			board[9]=player;
+			}
 		}
 	}
 
