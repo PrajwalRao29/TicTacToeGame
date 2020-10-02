@@ -81,6 +81,19 @@ public class TicTacToeGame {
 			{
 			board[9]=player;
 			}
+			else if(board[5]==' ')
+			{
+			board[5]=player;
+			}
+			else {
+				for(int position=1;position<10;position++)
+				{
+					if(board[position]==' ')
+					{
+						board[position]=player;
+					}
+				}
+			}
 		}
 	}
 
