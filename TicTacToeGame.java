@@ -60,11 +60,13 @@ public class TicTacToeGame {
 			}
 		} else {
 			System.out.println("Computer's turn to move");
-			if(compWinMove(board, player))
-			{
+			if (compWinMove(board, player)) {
+				return;
+			} else if (denyWin(board, player, user)) {
 				return;
 			}
-	}
+
+		}
 	}
 
 	/**
@@ -72,7 +74,7 @@ public class TicTacToeGame {
 	 */
 	public static boolean isFree(char[] board, int index) {
 		if (board[index] != ' ') {
-		
+
 			return false;
 		} else {
 			return true;
@@ -99,17 +101,19 @@ public class TicTacToeGame {
 	/**
 	 * UC7 Check winning condition
 	 */
-	public static boolean checkWin(char[] board,char ch) {
-		if((board[1] == ch && board[2] == ch && board[3] == ch) || (board[4] == ch && board[5] == ch && board[6] == ch)
-				|| (board[7] == ch && board[8] == ch && board[9] == ch) || (board[1] == ch && board[4] == ch && board[7] == ch)
-				|| (board[2] == ch && board[5] == ch && board[8] == ch) || (board[3] == ch && board[6] == ch && board[9] == ch)
-				|| (board[1] == ch && board[5] == ch && board[9] == ch) || (board[3] == ch && board[5] == ch && board[7] == ch))
-		return true;
+	public static boolean checkWin(char[] board, char ch) {
+		if ((board[1] == ch && board[2] == ch && board[3] == ch) || (board[4] == ch && board[5] == ch && board[6] == ch)
+				|| (board[7] == ch && board[8] == ch && board[9] == ch)
+				|| (board[1] == ch && board[4] == ch && board[7] == ch)
+				|| (board[2] == ch && board[5] == ch && board[8] == ch)
+				|| (board[3] == ch && board[6] == ch && board[9] == ch)
+				|| (board[1] == ch && board[5] == ch && board[9] == ch)
+				|| (board[3] == ch && board[5] == ch && board[7] == ch))
+			return true;
 		else {
 			return false;
 		}
 	}
-
 
 	public static boolean checkTie(char[] board) {
 		for (int position = 0; position < 10; position++) {
@@ -123,18 +127,13 @@ public class TicTacToeGame {
 	/**
 	 * UC8 Check if computer can win then move
 	 */
-	public static boolean compWinMove(char[] board, char ch)
-	{
-		for(int position=1;position<10;position++)
-		{
-			if(board[position]==' ')
-			{
-				board[position]=ch;
-				if(!checkWin(board,ch))
-				{
-					board[position]=' ';
-				}
-				else {
+	public static boolean compWinMove(char[] board, char ch) {
+		for (int position = 1; position < 10; position++) {
+			if (board[position] == ' ') {
+				board[position] = ch;
+				if (!checkWin(board, ch)) {
+					board[position] = ' ';
+				} else {
 					{
 						return true;
 					}
@@ -143,6 +142,28 @@ public class TicTacToeGame {
 		}
 		return false;
 	}
+
+	
+	/**
+	 * UC9 Check if user can win next move and deny it.
+	 */
+	public static boolean denyWin(char[] board, char player, char user) {
+		for (int position = 1; position < 10; position++) {
+			if (board[position] == ' ') {
+				board[position] = user;
+				if (!checkWin(board, user)) {
+					board[position] = ' ';
+				} else {
+					{
+						board[position] = player;
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to TicTacToe program");
 		char[] board = createBoard();
@@ -155,16 +176,14 @@ public class TicTacToeGame {
 		else {
 			player = computer;
 		}
-		while((!checkTie(board)))
-		{
-			move(board,player,user);
+		while ((!checkTie(board))) {
+			move(board, player, user);
 			showBoard(board);
-			if(checkWin(board, player))
-			{
-				System.out.println(player+" wins the game");
+			if (checkWin(board, player)) {
+				System.out.println(player + " wins the game");
 				break;
 			}
-			player=((player == 'X') ? 'O' : 'X');
+			player = ((player == 'X') ? 'O' : 'X');
 		}
 	}
 }
