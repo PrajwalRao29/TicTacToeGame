@@ -64,33 +64,20 @@ public class TicTacToeGame {
 				return;
 			} else if (denyWin(board, player, user)) {
 				return;
-			}
-			else if(board[1]==' ')
-			{
-			board[1]=player;
-			}
-			else if(board[3]==' ')
-			{
-			board[3]=player;
-			}
-			else if(board[7]==' ')
-			{
-			board[7]=player;
-			}
-			else if(board[9]==' ')
-			{
-			board[9]=player;
-			}
-			else if(board[5]==' ')
-			{
-			board[5]=player;
-			}
-			else {
-				for(int position=1;position<10;position++)
-				{
-					if(board[position]==' ')
-					{
-						board[position]=player;
+			} else if (board[1] == ' ') {
+				board[1] = player;
+			} else if (board[3] == ' ') {
+				board[3] = player;
+			} else if (board[7] == ' ') {
+				board[7] = player;
+			} else if (board[9] == ' ') {
+				board[9] = player;
+			} else if (board[5] == ' ') {
+				board[5] = player;
+			} else {
+				for (int position = 1; position < 10; position++) {
+					if (board[position] == ' ') {
+						board[position] = player;
 					}
 				}
 			}
@@ -149,6 +136,7 @@ public class TicTacToeGame {
 				return false;
 			}
 		}
+		System.out.println("GAME TIED !!!");
 		return true;
 	}
 
@@ -171,7 +159,6 @@ public class TicTacToeGame {
 		return false;
 	}
 
-	
 	/**
 	 * UC9 Check if user can win next move and deny it.
 	 */
@@ -193,25 +180,34 @@ public class TicTacToeGame {
 	}
 
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to TicTacToe program");
-		char[] board = createBoard();
-		char user = playerInput();
-		char computer = ((user == 'X') ? 'O' : 'X');
-		showBoard(board);
-		char player;
-		if (Toss())
-			player = user;
-		else {
-			player = computer;
-		}
-		while ((!checkTie(board))) {
-			move(board, player, user);
+		int loop = 1;
+		while (loop != 0) {
+			char[] board = createBoard();
+			char user = playerInput();
+			char computer = ((user == 'X') ? 'O' : 'X');
 			showBoard(board);
-			if (checkWin(board, player)) {
-				System.out.println(player + " wins the game");
-				break;
+			char player;
+			if (Toss())
+				player = user;
+			else {
+				player = computer;
 			}
-			player = ((player == 'X') ? 'O' : 'X');
+			while ((!checkTie(board))) {
+				move(board, player, user);
+				showBoard(board);
+				if (checkWin(board, player)) {
+					System.out.println(player + " wins the game");
+					break;
+				}
+				player = ((player == 'X') ? 'O' : 'X');
+			}
+			System.out.println("DO YOU WANT TO PLAY AGAIN? (Y/N)");
+			if (Character.toUpperCase(sc.next().charAt(0)) == 'N') {
+				loop = 0;
+			}
 		}
+		sc.close();
 	}
 }
