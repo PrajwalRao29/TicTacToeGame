@@ -46,7 +46,8 @@ public class TicTacToeGame {
 	}
 
 	/**
-	 * UC4 Player move and UC10 Computer takes corner first
+	 * UC4 Player move & UC10, UC 11 Computer prioritizes corner ,center and side
+	 * positions
 	 */
 	public static void move(char[] board, char player, char user) {
 		if (player == user) {
@@ -116,14 +117,15 @@ public class TicTacToeGame {
 	/**
 	 * UC7 Check winning condition
 	 */
-	public static boolean checkWin(char[] board, char ch) {
-		if ((board[1] == ch && board[2] == ch && board[3] == ch) || (board[4] == ch && board[5] == ch && board[6] == ch)
-				|| (board[7] == ch && board[8] == ch && board[9] == ch)
-				|| (board[1] == ch && board[4] == ch && board[7] == ch)
-				|| (board[2] == ch && board[5] == ch && board[8] == ch)
-				|| (board[3] == ch && board[6] == ch && board[9] == ch)
-				|| (board[1] == ch && board[5] == ch && board[9] == ch)
-				|| (board[3] == ch && board[5] == ch && board[7] == ch))
+	public static boolean checkWin(char[] board, char player) {
+		if ((board[1] == player && board[2] == player && board[3] == player)
+				|| (board[4] == player && board[5] == player && board[6] == player)
+				|| (board[7] == player && board[8] == player && board[9] == player)
+				|| (board[1] == player && board[4] == player && board[7] == player)
+				|| (board[2] == player && board[5] == player && board[8] == player)
+				|| (board[3] == player && board[6] == player && board[9] == player)
+				|| (board[1] == player && board[5] == player && board[9] == player)
+				|| (board[3] == player && board[5] == player && board[7] == player))
 			return true;
 		else {
 			return false;
@@ -179,35 +181,51 @@ public class TicTacToeGame {
 		return false;
 	}
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Welcome to TicTacToe program");
-		int loop = 1;
-		while (loop != 0) {
-			char[] board = createBoard();
-			char user = playerInput();
-			char computer = ((user == 'X') ? 'O' : 'X');
+	/**
+	 * UC12_Play till game is won or tied.
+	 */
+	public static void winOrSwitch(char[] board, char player, char user) {
+		while ((!checkTie(board))) {
+			move(board, player, user);
 			showBoard(board);
-			char player;
-			if (Toss())
-				player = user;
-			else {
-				player = computer;
+			if (checkWin(board, player)) {
+				System.out.println(player + " wins the game");
+				break;
 			}
-			while ((!checkTie(board))) {
-				move(board, player, user);
-				showBoard(board);
-				if (checkWin(board, player)) {
-					System.out.println(player + " wins the game");
-					break;
-				}
-				player = ((player == 'X') ? 'O' : 'X');
-			}
-			System.out.println("DO YOU WANT TO PLAY AGAIN? (Y/N)");
-			if (Character.toUpperCase(sc.next().charAt(0)) == 'N') {
-				loop = 0;
-			}
+			player = ((player == 'X') ? 'O' : 'X');
 		}
-		sc.close();
+	}
+
+	/**
+	 * UC13_Check if user wants to invoke initiate function again
+	 */
+	public static void initiateGame() {
+		char[] board = createBoard();
+		char user = playerInput();
+		char computer = ((user == 'X') ? 'O' : 'X');
+		showBoard(board);
+		char player;
+		if (Toss())
+			player = user;
+		else {
+			player = computer;
+		}
+		winOrSwitch(board, player, user);
+	}
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Welcome to TicTacToe program");
+		int initiatekey = 1;
+		while (initiatekey != 0) {
+			initiateGame();
+			System.out.println("DO YOU WANT TO PLAY AGAIN? (Y/N)");
+			if (Character.toUpperCase(scanner.next().charAt(0)) == 'N') {
+				initiatekey = 0;
+				System.out.println("THANKS FOR PLAYING !");
+			}
+
+		}
+		scanner.close();
 	}
 }
